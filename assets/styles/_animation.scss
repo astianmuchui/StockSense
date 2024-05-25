@@ -1,0 +1,260 @@
+main
+{
+    width: 100%;
+    height: 100vh;
+    @extend .y-start;
+    box-sizing: border-box;
+    padding: 2% 0;
+
+    *
+    {
+        color: #fff;
+    }
+  }
+  
+  .swiper-container
+  {
+    width: 80%;
+    height: 85%;
+  }
+  
+  .slide
+  {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    font-size: 18px;
+    
+    background: rgba(0, 0, 1, 0.3);
+    overflow: hidden;
+    z-index: 2;
+
+
+    &-image
+    {
+
+      position: absolute;
+      top: -200px;
+      left: -200px;
+      width: calc(100% + 400px);
+      height: calc(100% + 400px);
+      background-position: 50% 50%;
+      background-size: cover;
+      z-index: -1;
+      
+    }
+
+    &-title
+    {
+      
+      font-size: 2rem;
+      line-height: 1;
+      width: 100%;
+      white-space: normal;
+      word-break: break-word;
+      color: #FFF;
+      z-index: 1;
+      mix-blend-mode: overlay;
+      text-transform: uppercase;
+      font-weight: normal;
+
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      box-sizing: border-box;
+      padding-top: 22%;
+
+      text-align: center;
+
+      a
+      {
+        animation: none;
+      }
+
+      @media (min-width: 45em)
+      {
+          font-size: 7vw;
+          max-width: none;
+      }
+
+      span
+      {
+        white-space: pre;
+        display: inline-block;
+        opacity: 0;
+      }
+    }
+  }
+  
+  .slideshow
+  {
+    position: relative;
+    
+    &-pagination
+    {
+      position: absolute;
+      bottom: 5rem;
+      left: 0;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      transition: .3s opacity;
+      z-index: 10;
+
+      &-item
+      {
+        display: flex;
+        align-items: center;
+
+        .pagination-number
+        {
+            opacity: 0.5;
+        }
+
+        &:hover,
+        &:focus
+        {
+          cursor: pointer;
+        }
+
+        &:last-of-type
+        {
+          .pagination-separator
+          {
+            width: 0;
+          }
+        }
+        &.active
+        {
+          .pagination-number
+          {
+            opacity: 1;
+          }
+          .pagination-separator
+          {
+            width: 10vw;
+          }
+        }
+      }
+    }
+    
+    &-navigation
+    {
+      &-button
+      {
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 5rem;
+        z-index: 1000;
+        transition: all .3s ease;
+        color: #FFF;
+
+        &:hover, &:focus
+        {
+          cursor: pointer;
+          background: rgba(#000, 0.1);
+          backdrop-filter: blur(10px);
+        }
+
+        &.prev
+        {
+          left: 0;
+        }
+        
+        &.next
+        {
+          right: 0;
+        }
+      }
+    }
+    
+  }
+  
+  
+  .pagination-number
+  {
+    font-size: 1.8rem;
+    color: #FFF;
+
+    padding: 0 0.5rem;
+  }
+  
+  .pagination-separator
+  {
+    display: none;
+
+    @media (min-width: 45em)
+    {
+       display: block;
+    }
+
+    position: relative;
+    width: 40px;
+    height: 2px;
+    background: rgba(#FFFFFF, 0.25);
+    transition: all .3s ease;
+
+    &-loader
+    {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #FFFFFF;
+      transform-origin: 0 0;
+      //transform: scaleX(0);
+      //transition: all 0.3s ease;
+    }
+  }
+
+
+  @media screen and (max-width: 768px)
+  {
+
+    main
+    {
+      overflow-x: hidden;
+      box-sizing: border-box;
+
+    }
+
+    .slideshow
+    {
+      width: 80%;
+    }
+
+
+    .swiper-slide, .slide
+    {
+        width: 100%;
+
+        .slide-image
+        {
+            background-size: cover;
+        }
+
+      .slide-title
+      {
+          padding-top: 80%;
+          font-size: 1.5rem;
+          background-color: rgba(0,0,0,0.99);
+          backdrop-filter: blur(4px);
+      }
+    }
+
+    .slideshow-navigation
+    {
+        display: none;
+    }
+  }

@@ -1,0 +1,142 @@
+@import 'root';
+
+html
+{
+    scroll-behavior: smooth;
+    scroll-timeline: 5;
+}
+
+body
+{
+
+    margin: 0;
+    padding: 0;
+    background-color: lightenb($theme-color, 100);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    box-sizing: border-box;
+    z-index: -2;
+    overflow-x: hidden;
+
+    main, .info-sections
+    {
+        height: 80vh;
+        width: 100%;
+        @extend .flex-column;
+
+        .container
+        {
+            @extend .grid-2;
+            width: 90%;
+            height: 80%;
+            padding: 1%;
+
+            .text
+            {
+                box-sizing: border-box;
+                padding-top: 5%;
+                height: 80%;
+                width: 89%;
+                h1
+                {
+                    font-size: 50px;
+                    font-weight: 600;
+                    color: lighten($primary-color, 15);
+                }
+                p
+                {
+                    width: 60%;
+                    font-size: 18px;
+                    opacity: .8;
+                }
+                a
+                {
+                    position: relative;
+                    top: 20px;
+                    padding: 20px 40px;
+                }
+            }
+            .img
+            {
+                @extend .flex-column;
+                width: 90%;
+                .img-container
+                {
+                @extend .flex-column;
+
+                    padding: 2.5%;
+                    border: 4px solid $text-color;
+                    width: 90%;
+                    height: 90%;
+                    border-radius: 20px;
+                    box-sizing: border-box;
+
+                    img
+                    {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 20px;
+                    }
+                }
+
+                img
+                {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 20px;
+                }
+
+            }
+        }
+
+        .auth, .signup
+        {
+            width: 40%;
+            height: 90%;
+            margin-top: 2%;
+            border-radius: 20px;
+            @extend .shadowed, .flex-column;
+            box-sizing: border-box;
+            padding: 2%;
+
+            form
+            {
+                @extend .flex-column;
+                width: 100%;
+                margin-top: 10px;
+
+                input
+                {
+                    height: 55px;
+                    width: 100%;
+                    margin-bottom: 30px;
+                    border: 3px solid $text-color;
+                    border-radius: 20px;
+                    box-sizing: border-box;
+                    padding: 10px;
+                    background-color: transparent;
+                }
+                button
+                {
+                    height: 60px;
+                    width: 100%;
+                    border: none;
+                    border-radius: 20px;
+                    background-color: $primary-color;
+                    font-size: 18px;
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .login
+        {
+            height: 80%;
+        }
+    }
+
+
+}
