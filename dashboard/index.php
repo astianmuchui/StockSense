@@ -1,3 +1,18 @@
+<?php
+
+    require "../vendor/autoload.php";
+    require "../core/index.php";
+
+    if (User::IsAuthenticated())
+    {
+        $products = User::Products($_SESSION['user_id']);
+    }
+    else
+    {
+        header("Location: ../login");
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +54,7 @@
 
                         <h3 class="text-primary">My API Key </h3>
 
-                        <a href="#" class="btn-primary-bordered"> View </a>
+                        <a href="./api_key/" class="btn-primary-bordered"> View </a>
                     </div>
 
 
@@ -48,7 +63,7 @@
 
                         <h3 class="text-primary">My Products</h3>
 
-                        <a href="#" class="btn-primary-bordered"> Manage </a>
+                        <a href="./stock/" class="btn-primary-bordered"> Manage </a>
                     </div>
 
 
@@ -57,7 +72,7 @@
 
                         <h3 class="text-primary">Manage Orders</h3>
 
-                        <a href="#" class="btn-primary-bordered"> View </a>
+                        <a href="./orders/" class="btn-primary-bordered"> View </a>
                     </div>
 
 
@@ -66,7 +81,7 @@
 
                         <h3 class="text-primary">Sales </h3>
 
-                        <a href="#" class="btn-primary-bordered"> Manage </a>
+                        <a href="./sales/" class="btn-primary-bordered"> Manage </a>
                     </div>
 
                 </div>

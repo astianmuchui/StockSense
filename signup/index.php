@@ -1,4 +1,6 @@
 <?php
+
+    require "../vendor/autoload.php";
     require "../core/index.php";
     $error = "";
 
