@@ -12,7 +12,7 @@
     <header class="desktop-header">
 
     <div class="title">
-        <img src="../assets/img/m_logo.png" alt="" height="50px">
+        <img src="./assets/img/m_logo.png" alt="" height="50px">
     </div>
 
 
