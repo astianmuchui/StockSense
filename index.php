@@ -8,27 +8,23 @@
 </head>
 <body>
 
+
     <header class="desktop-header">
 
-        <div class="title">
-            <img src="./assets/img/m_logo.png" alt="" height="50px">
-        </div>
+    <div class="title">
+        <img src="../assets/img/m_logo.png" alt="" height="50px">
+    </div>
 
 
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Signup</a></li>
-            </ul>
-        </nav>
+    <nav>
+        <ul>
+            <li><a href="./">Home</a></li>
+            <li><a href="./">About</a></li>
+            <li><a href="./signup">Signup</a></li>
+            <li><a href="./login">Login</a></li>
+        </ul>
+    </nav>
 
-        <div class="hamburger open" id="hamburger">
-            <div class="lines ">
-                <div></div>
-                <div></div>
-            </div>
-        </div>
     </header>
 
     <main class="info-sections">

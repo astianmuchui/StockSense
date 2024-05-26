@@ -94,7 +94,7 @@ body
         .auth, .signup
         {
             width: 40%;
-            height: 90%;
+            height: 95%;
             margin-top: 2%;
             border-radius: 20px;
             @extend .shadowed, .flex-column;
@@ -109,7 +109,7 @@ body
 
                 input
                 {
-                    height: 55px;
+                    height: 50px;
                     width: 100%;
                     margin-bottom: 30px;
                     border: 3px solid $text-color;
@@ -120,7 +120,7 @@ body
                 }
                 button
                 {
-                    height: 60px;
+                    height: 55px;
                     width: 100%;
                     border: none;
                     border-radius: 20px;
