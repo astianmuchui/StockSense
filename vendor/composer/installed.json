@@ -1,0 +1,48 @@
+{
+    "packages": [
+        {
+            "name": "astianmuchui/pixelsequel",
+            "version": "dev-staging",
+            "version_normalized": "dev-staging",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/astianmuchui/PixelSequel.git",
+                "reference": "2744098854e973f92cee7167f94deb36795473a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/astianmuchui/PixelSequel/zipball/2744098854e973f92cee7167f94deb36795473a2",
+                "reference": "2744098854e973f92cee7167f94deb36795473a2",
+                "shasum": ""
+            },
+            "time": "2024-05-26T13:03:36+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "PixelSequel\\Model\\": "src/Model",
+                    "PixelSequel\\Schema\\": "src/Schema"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "astianmuchui",
+                    "email": "astianmuchui@gmail.com"
+                }
+            ],
+            "description": "A Lightweight PHP ORM",
+            "support": {
+                "issues": "https://github.com/astianmuchui/PixelSequel/issues",
+                "source": "https://github.com/astianmuchui/PixelSequel/tree/staging"
+            },
+            "install-path": "../astianmuchui/pixelsequel"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}
