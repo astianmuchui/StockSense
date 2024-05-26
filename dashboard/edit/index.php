@@ -1,3 +1,37 @@
+<?php
+    require "../../vendor/autoload.php";
+    require "../../core/index.php";
+
+    $error = "";
+    if (!User::IsAuthenticated())
+    {
+        header("Location:../../index.php");
+    }
+    else
+    {
+        $data = User::Data();
+
+        if (isset($_POST['update']))
+        {
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $phone = $_POST['phone'];
+
+            if (User::Update($_SESSION['user_id'], $name, $email, $phone))
+            {
+                header("Location:../../dashboard/edit");
+            }
+            else
+            {
+                $error = "Could not update Profile";
+            }
+
+        }
+
+    }
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,71 +48,18 @@
         <?php include('../partials/dashboard.php') ?>
 
         <div class="dashboard-area">
-            <a href="#" class="btn-primary btn-left"> <i class="fas fa-arrow-circle-left"></i>  Menu </a>
 
             <div class="edit-container">
-                <h4>Edit Profile</h4>
 
-                <form action="#">
 
-                    <input type="text" placeholder="Name">
-                    <input type="text" placeholder="Email">
-                    <input type="text" placeholder="Phone Number">
-                    <input type="text" placeholder="Coordinates in lattitude">
-                    <input type="text" placeholder="Coordinates in longitude">
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+                    <p class="text-red"><?php echo $error ?></p>
+                    <h2 class="text-bold text-primary">Update Profile</h2>
+                    <input type="text" placeholder="Name" value="<?php echo $data->name?>" required name="name">
+                    <input type="email" placeholder="Email" value="<?php echo $data->email?>" required name="email">
+                    <input type="text" placeholder="Phone Number" value="<?php echo $data->phone?>" required name="phone">
 
-                    <select name="county" required>
-                        <option value="">Select County</option>
-                        <option value="mombasa">Mombasa</option>
-                        <option value="mombasa">Kwale</option>
-                        <option value="kilifi">Kilifi</option>
-                        <option value="Tana river">Tana river</option>
-                        <option value="Lamu">Lamu</option>
-                        <option value="Taita">Taita taveta</option>
-                        <option value="Garrisa">Garissa</option>
-                        <option value="Wajir">Wajir</option>
-                        <option value="Mandera">Mandera</option>
-                        <option value="Marsabit">Marsabit</option>
-                        <option value="Isiolo">Isiolo</option>
-                        <option value="Meru">Meru</option>
-                        <option value="Tharaka nithi">Tharaka nithi</option>
-                        <option value="Embu">Embu</option>
-                        <option value="kitui">Kitui</option>
-                        <option value="machakos">Machakos</option>
-                        <option value="makueni">Makueni</option>
-                        <option value="Nyandarua">Nyandarua</option>
-                        <option value="Nyeri">Nyeri</option>
-                        <option value="Kirinyaga">Kirinyaga</option>
-                        <option value="Muranga">Muranga</option>
-                        <option value="Kiambu">Kiambu</option>
-                        <option value="Turkana">Turkana</option>
-                        <option value="West pokot">West pokot</option>
-                        <option value="Samburu">Samburu</option>
-                        <option value="Trans nzoia">Trans nzoia</option>
-                        <option value="Uasin gishu">Uasin gishu</option>
-                        <option value="Elgeyo marakwet">Elgeyo marakwet</option>
-                        <option value="Nandi">Nandi</option>
-                        <option value="Baringo">Baringo</option>
-                        <option value="Laikipia">Laikipia</option>
-                        <option value="Nakuru">Nakuru</option>
-                        <option value="Narok">Narok</option>
-                        <option value="Kajiado">Kajiado</option>
-                        <option value="Kericho">Kericho</option>
-                        <option value="Bomet">Bomet</option>
-                        <option value="Kakamega">Kakamega</option>
-                        <option value="Vihiga">Vihiga</option>
-                        <option value="Bungoma">Bungoma</option>
-                        <option value="Busia">Busia</option>
-                        <option value="Siaya">Siaya</option>
-                        <option value="kisumu">Kisumu</option>
-                        <option value="Homabay">Homabay</option>
-                        <option value="Migori">Migori</option>
-                        <option value="Kisii">Kisii</option>
-                        <option value="Nyamira">Nyamira</option>
-                        <option value="Nairobi">Nairobi</option>
-                    </select>
-
-                    <button class="btn-primary">Update Profile</button>
+                    <button class="btn-gradient" name="update">Update Profile</button>
 
                 </form>
 
