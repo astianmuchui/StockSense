@@ -1,11 +1,79 @@
 <?php
 
+require "/opt/lampp/htdocs/stocksense/vendor/autoload.php";
+
 use PixelSequel\Model\Model;
+session_start();
+
 
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
-session_start();
+interface MediaHandler
+{
+    public static function Upload ( $file, string $folder="", $tmp="",array $formats=[]);
+    public static function Delete ( string $file);
+}
+
+final class FileHandler implements MediaHandler
+{
+
+    public function __construct()
+    {
+
+    }
+    public static function Upload ( $file, string $folder="", $tmp="",array $formats=[])
+    {
+
+        $filename = basename($file);
+        $path = $folder.$filename;
+        $extension = pathinfo($path,PATHINFO_EXTENSION);
+
+        if (gettype($formats) == "array")
+        {
+            if (in_array($extension,$formats))
+            {
+                if (move_uploaded_file($tmp,$path))
+                {
+                    return true;
+                }
+                else
+                {
+
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static function Delete ( string $file) : bool
+    {
+        if (file_exists($file))
+        {
+            if (unlink($file))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
 
 new Model (
     dbname:"stocksense",
@@ -24,6 +92,10 @@ interface Users
     public static function ApiKey(int $user_id);
     public static function GenerateApiKey(int $user_id);
     public static function HasApiKey(int $user_id);
+
+    public static function Data();
+
+    public static function Update(int $user_id, string $name, string $email, string $phone);
 
 }
 
@@ -236,11 +308,17 @@ class User implements Users
                 self::DeleteApiKeys($user_id);
             }
 
-            $api_key = password_hash(bin2hex(random_bytes(32)), PASSWORD_BCRYPT);
+            $api_key = password_hash(bin2hex(random_bytes(32)), PASSWORD_DEFAULT);
             $api_key = str_replace("/", "", $api_key);
             $api_key = str_replace("+", "", $api_key);
             $api_key = str_replace("$", "", $api_key);
-            $api_key = substr($api_key, 0, 20);
+            $api_key = str_replace("[", "", $api_key);
+            $api_key = str_replace("]", "", $api_key);
+            $api_key = str_replace("{", "", $api_key);
+            $api_key = str_replace("}", "", $api_key);
+            $api_key = str_replace("(", "", $api_key);
+            $api_key = str_replace("2", "", $api_key);
+            $api_key = substr($api_key, rand(1, 5), rand(10, strlen($api_key)));
 
 
             return (Model::Insert(
@@ -252,4 +330,125 @@ class User implements Users
             ));
          }
     }
+
+    public static function Data()
+    {
+        /**
+         * @todo Fetch the data of the user
+         * @body Fetch the data of the user
+         * @return object
+         */
+
+         if (Model::Connected())
+         {
+            $data = Model::All(
+                table: "users",
+                where: [
+                    "id" => $_SESSION['user_id']
+                ],
+                limit: 1
+            );
+            $data = $data[0];
+            return $data;
+         }
+    }
+
+    public static function Update(int $user_id, string $name, string $email, string $phone)
+    {
+        /**
+         * @todo Update the user's data
+         * @body Update the user's data
+         * @param int $user_id Id of the user
+         * @param string $name Name of the user
+         * @param string $email Email of the user
+         * @param string $phone Phone number of the user
+         * @return bool
+         */
+
+         if (Model::Connected())
+         {
+            return (Model::Update(
+                table: "users",
+                data: [
+                    "name" => $name,
+                    "email" => $email,
+                    "phone" => $phone
+                ],
+                param_t: "id",
+                param_n: $user_id
+            ));
+         }
+    }
+}
+
+interface StockInterface
+{
+    public static function Create(int $user_id, mixed $product_name,mixed $image_path, int $price, int $count, int $category, mixed $description);
+}
+
+class Products implements StockInterface
+{
+    public function __construct()
+    {
+
+    }
+
+    public static function Create(int $user_id, mixed $product_name,mixed $image_path, int $price, int $count, int $category, mixed $description)
+    {
+        /**
+         * @todo Create a new product
+         * @body Create a new product
+         * @param int $user_id Id of the user
+         * @param mixed $product_name Name of the product
+         * @param int $price Price of the product
+         * @param int $count Number of the product
+         * @param int $category Category of the product
+         * @param mixed $description Description of the product
+         * @return bool
+         */
+
+         if (Model::Connected())
+         {
+            return (Model::Insert(
+                table: "products",
+                data: [
+                    "user_id" => $user_id,
+                    "name" => $product_name,
+                    "image_path" => $image_path,
+                    "price" => $price,
+                    "count" => $count,
+                    "category" => $category,
+                    "description" => $description
+                ]
+            ));
+         }
+    }
+}
+
+class Categories
+{
+    public static function Create(mixed $category_name, mixed $image, mixed $tmp)
+    {
+        /**
+         * @todo Create a new category
+         * @body Create a new category
+         * @param mixed $category_name Name of the category
+         * @param mixed $image Image of the category
+         */
+
+         if (FileHandler::Upload($image,"../../assets/uploads/", $tmp, ["jpg","jpeg","png","gif"]))
+         {
+            if (Model::Connected())
+            {
+                return (Model::Insert(
+                    table: "categories",
+                    data: [
+                        "name" => $category_name,
+                        "image" => $image
+                    ]
+                ));
+            }
+        }
+    }
+
 }
