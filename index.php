@@ -38,7 +38,7 @@
             <div class="text">
                 <h1>Stock Management for Literally Everyone</h1>
                 <p>Unleash your productivity with stock count records, receipt generation,  order management and so much more with stocksense</p>
-                <a href="#" class="btn-gradient">Get Started</a>
+                <a href="./signup" class="btn-gradient">Get Started</a>
             </div>
 
         </div>
@@ -50,7 +50,7 @@
             <div class="text">
                 <h1>Group your products into categories</h1>
                 <p>Sort different products into categories and have the ability to create your very own</p>
-                <a href="#" class="btn-gradient">Get Started</a>
+                <a href="./signup" class="btn-gradient">Get Started</a>
             </div>
 
             <div class="img">
@@ -71,7 +71,7 @@
             <div class="text">
                 <h1>Keep everything up to date</h1>
                 <p>Whether you have run out of stock or need to change a price. Stocksense has you covered</p>
-                <a href="#" class="btn-gradient">Get Started</a>
+                <a href="./signup" class="btn-gradient">Get Started</a>
             </div>
 
         </div>
@@ -83,7 +83,7 @@
             <div class="text">
                 <h1>Integrate with other platforms</h1>
                 <p>Get a custom API Endpoint that helps you carry your stock anywhere you want. </p>
-                <a href="#" class="btn-gradient">Get Started</a>
+                <a href="./signup" class="btn-gradient">Get Started</a>
             </div>
 
             <div class="img">

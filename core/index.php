@@ -1,6 +1,5 @@
 <?php
 
-require "/opt/lampp/htdocs/stocksense/vendor/autoload.php";
 
 use PixelSequel\Model\Model;
 session_start();
@@ -143,7 +142,8 @@ class User implements Users
          {
             if (!self::Exists($email))
             {
-                return (Model::Insert(
+
+                if (Model::Insert(
                     table: "users",
                     data: [
                         "name"=> $name,
@@ -151,7 +151,10 @@ class User implements Users
                         "phone"=> $phone,
                         "password"=> password_hash($password, PASSWORD_BCRYPT)
                     ]
-                ));
+                )){
+                    Self::Authenticate($email, $password);
+                    return true;
+                }
             }
             else
             {
