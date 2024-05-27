@@ -5,7 +5,7 @@
     $error = "";
     if (!User::IsAuthenticated())
     {
-        header("Location:../../index.php");
+        header("Location:../../login");
     }
     else
     {

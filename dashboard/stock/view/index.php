@@ -1,7 +1,7 @@
 <?php
+    require "../../../vendor/autoload.php";
 
     require "../../../core/index.php";
-    require "../../../vendor/autoload.php";
     $error = "";
 
     if (User::IsAuthenticated())

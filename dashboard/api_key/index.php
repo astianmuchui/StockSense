@@ -25,7 +25,7 @@
     }
     else
     {
-        header("Location: ../login/");
+        header("Location: ../../login/");
     }
 
 ?>
