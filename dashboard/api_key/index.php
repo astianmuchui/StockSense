@@ -37,7 +37,6 @@
     <link rel="stylesheet" href="../../assets/styles/dashboard.css">
     <script src="../../assets/js/font_awesome_main.js"></script>
     <title>Stocksense Dashboard</title>
-
 </head>
 <body>
 
@@ -50,17 +49,14 @@
 
             <div class="edit-container" style="height: 40% !important;">
 
-                <form form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-                <h2 class="text-primary text-bold">My API KEY</h2>
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+                    <h2 class="text-primary text-bold">My API KEY</h2>
 
-                    <input type="text" disabled placeholder="<?php echo $api_key ?>">
+                    <input type="password" id="apiKeyInput" disabled value="<?php echo $api_key ?>">
                     <div class="grid-2">
-                    <button class="btn-gradient"> <i class="fas fa-clipboard"></i> Copy</button>
-                    <button class="btn-gradient" name="generate"> <i class="fas"></i> Generate new</button>
-
+                        <button type="button" id="copyButton" class="btn-gradient"> <i class="fas fa-clipboard"></i> Copy</button>
+                        <button class="btn-gradient" name="generate"> <i class="fas"></i> Generate new</button>
                     </div>
-
-
                 </form>
 
             </div>
@@ -68,6 +64,24 @@
         </div>
 
     </main>
+
+    <script>
+        document.getElementById('copyButton').addEventListener('click', () => {
+            var apiKeyInput = document.getElementById('apiKeyInput');
+            apiKeyInput.disabled = false;
+            apiKeyInput.type = "text";
+            apiKeyInput.select();
+            apiKeyInput.setSelectionRange(0, 99999);
+
+            navigator.clipboard.writeText(apiKeyInput.value).then(() => {
+                alert('API Key copied to clipboard');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+
+            apiKeyInput.disabled = true;
+        });
+    </script>
 
 </body>
 </html>
