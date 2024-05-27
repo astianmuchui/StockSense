@@ -383,7 +383,7 @@ class User implements Users
 
 interface StockInterface
 {
-    public static function Create(int $user_id, mixed $product_name,mixed $image_path, int $price, int $count, int $category, mixed $description);
+    public static function Create(int $user_id, mixed $product_name,mixed $image_path, mixed $tmp, int $price, int $count, int $category);
 }
 
 class Products implements StockInterface
@@ -393,7 +393,30 @@ class Products implements StockInterface
 
     }
 
-    public static function Create(int $user_id, mixed $product_name,mixed $image_path, int $price, int $count, int $category, mixed $description)
+    public static function Get(int $product_id)
+    {
+        /**
+         * @todo Fetch the data of the product
+         * @body Fetch the data of the product
+         * @param int $product_id Id of the product
+         * @return object
+         */
+
+         if (Model::Connected())
+         {
+            $data = Model::All(
+                table: "products",
+                where: [
+                    "id" => $product_id
+                ],
+                limit: 1
+            );
+            $data = $data[0];
+            return $data;
+         }
+    }
+
+    public static function Create(int $user_id, mixed $product_name,mixed $image_path, mixed $tmp, int $price, int $count, int $category)
     {
         /**
          * @todo Create a new product
@@ -409,7 +432,9 @@ class Products implements StockInterface
 
          if (Model::Connected())
          {
-            return (Model::Insert(
+            FileHandler::Upload($image_path, "../../assets/uploads/", $tmp, ["jpg","jpeg","png","gif"]);
+
+            return (Model::Insert (
                 table: "products",
                 data: [
                     "user_id" => $user_id,
@@ -417,24 +442,228 @@ class Products implements StockInterface
                     "image_path" => $image_path,
                     "price" => $price,
                     "count" => $count,
-                    "category" => $category,
-                    "description" => $description
+                    "category" => $category
                 ]
             ));
+
+        }
+    }
+
+    public static function GetOrders(int $product_id)
+    {
+        /**
+         * @todo Fetch all orders of the product
+         * @body Fetch all orders of the product
+         * @param int $product_id Id of the product
+         * @return array of objects
+         */
+
+         if (Model::Connected())
+         {
+            $data = Model::All(
+                table: "orders",
+                where: [
+                    "product_id" => $product_id
+                ]
+            );
+            return $data;
          }
     }
+
+    public static function Delete(int $product_id)
+    {
+        /**
+         * @todo Delete the product
+         * @body Delete the product
+         * @param int $product_id Id of the product
+         * @return bool
+         */
+
+         if (Model::Connected())
+         {
+            $data = Model::All(
+                table: "products",
+                where: [
+                    "id" => $product_id
+                ],
+                limit: 1
+            );
+            $data = $data[0];
+            if (Model::Delete (
+                table: "products",
+                param_t: "id",
+                param_n: $product_id
+            ))
+            {
+                FileHandler::Delete("../../assets/uploads/".$data->image_path);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+         }
+    }
+
+    public static function GetSales(int $product_id)
+    {
+        /**
+         * @todo Fetch all sales of the product
+         * @body Fetch all sales of the product
+         * @param int $product_id Id of the product
+         * @return array of objects
+         */
+
+         if (Model::Connected())
+         {
+            $data = Model::All(
+                table: "sales",
+                where: [
+                    "product_id" => $product_id
+                ]
+            );
+            return $data;
+         }
+    }
+
+    public static function GetAvailable(int $product_id)
+    {
+        /**
+         * @todo Fetch the available number of the product
+         * @body Fetch the available number of the product
+         * @param int $product_id Id of the product
+         * @return int
+         */
+
+         if (Model::Connected())
+         {
+            $data = Model::All(
+                table: "products",
+                where: [
+                    "id" => $product_id
+                ],
+                limit: 1
+            );
+            $data = $data[0];
+            return $data->count;
+         }
+
+    }
+
+    public static function Update(int $product_id, mixed $product_name, mixed $image_path=NULL, mixed $tmp=NULL, int $price, int $count, int $category)
+    {
+        /**
+         * @todo Update the product
+         * @body Update the product
+         * @param int $product_id Id of the product
+         * @param mixed $product_name Name of the product
+         * @param mixed $image_path Image of the product
+         * @param int $price Price of the product
+         * @param int $count Number of the product
+         * @param int $category Category of the product
+         * @param mixed $description Description of the product
+         * @return bool
+         */
+
+         if (Model::Connected())
+         {
+            $data = Model::All(
+                table: "products",
+                where: [
+                    "id" => $product_id
+                ],
+                limit: 1
+            );
+            $data = $data[0];
+
+            if ($image_path == NULL && $tmp == NULL)
+            {
+                return Model::Update(
+                    table: "products",
+                    data: [
+                        "name" => $product_name,
+                        "price" => $price,
+                        "count" => $count,
+                        "category" => $category
+                    ],
+                    param_t: "id",
+                    param_n: $product_id
+                );
+            }
+            else
+            {
+                if (FileHandler::Upload($image_path, "../../assets/uploads/", $tmp, ["jpg","jpeg","png","gif"]))
+                {
+                    return Model::Update(
+                        table: "products",
+                        data: [
+                            "name" => $product_name,
+                            "image_path" => $image_path,
+                            "price" => $price,
+                            "count" => $count,
+                            "category" => $category
+                        ],
+                        param_t: "id",
+                        param_n: $product_id
+                    );
+                }
+
+            }
+        }
+    }
+
 }
 
 class Categories
 {
+
+    public static function Get(int $category_id)
+    {
+        /**
+         * @todo Fetch the data of the category
+         * @body Fetch the data of the category
+         * @param int $category_id Id of the category
+         * @return object
+         */
+
+         if (Model::Connected())
+         {
+            $data = Model::All(
+                table: "categories",
+                where: [
+                    "id" => $category_id
+                ],
+                limit: 1
+            );
+            $data = $data[0];
+            return $data;
+         }
+    }
+    public static function All()
+    {
+        /**
+         * @todo Fetch all categories
+         * @body Fetch all categories
+         * @return array of objects
+         */
+
+         if (Model::Connected())
+         {
+            $data = Model::All(
+                table: "categories"
+            );
+            return $data;
+         }
+    }
+
     public static function Create(mixed $category_name, mixed $image, mixed $tmp)
     {
         /**
-         * @todo Create a new category
-         * @body Create a new category
-         * @param mixed $category_name Name of the category
-         * @param mixed $image Image of the category
-         */
+        * @todo Create a new category
+        * @body Create a new category
+        * @param mixed $category_name Name of the category
+        * @param mixed $image Image of the category
+        */
 
          if (FileHandler::Upload($image,"../../assets/uploads/", $tmp, ["jpg","jpeg","png","gif"]))
          {
