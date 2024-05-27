@@ -86,7 +86,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../assets/styles/dashboard.css">
     <script src="../../../assets/js/font_awesome_main.js"></script>
-    <title>Supplier Dashboard</title>
+    <title>StockSense Dashboard</title>
 
 </head>
 <body>

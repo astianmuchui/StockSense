@@ -45,6 +45,7 @@ $text-color: lighten($primary-color, 15);
         animation-delay: 0.5s;
         padding: 2%;
 
+
         form
         {
             width: 90%;
@@ -119,7 +120,7 @@ $text-color: lighten($primary-color, 15);
 
         border-radius: 10px;
         width: 40%;
-        height: 90%;
+        height: 95%;
         opacity: 0;
         display: none;
         position: sticky;
@@ -157,7 +158,7 @@ $text-color: lighten($primary-color, 15);
 
             input, select
             {
-                height: 50px;
+                height: 45px;
                 width: 100%;
                 border: 2px solid $primary-color;
                 border-radius: 10px;
