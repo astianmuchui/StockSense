@@ -1,6 +1,5 @@
 <?php
 
-require "/opt/lampp/htdocs/stocksense/vendor/autoload.php";
 
 use PixelSequel\Model\Model;
 session_start();
