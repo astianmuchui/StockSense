@@ -6,6 +6,7 @@
     if (User::IsAuthenticated())
     {
         $products = User::Products($_SESSION['user_id']);
+        $categories = Categories::All();
 
         if(isset($_POST['add_category']))
         {
@@ -19,8 +20,28 @@
             }
         }
 
+        if(isset($_POST['add_product']))
+        {
+            if (Products::Create(
+                $_SESSION['user_id'],
+                $_POST['name'],
+                $_FILES['img']['name'],
+                $_FILES['img']['tmp_name'],
+                $_POST['price'],
+                $_POST['count'],
+                $_POST['category']
+            ))
+            {
+                header("Location: ./");
+            }
+            else
+            {
+                $error = "An error occurred";
+            }
+        }
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,18 +50,15 @@
     <link rel="stylesheet" href="../../assets/styles/dashboard.css">
     <script src="../../assets/js/font_awesome_main.js"></script>
     <title>Stocksense Dashboard</title>
-
 </head>
 <body>
 
-
-
-<div class="modal-z flex-column" id="modalz">
+    <div class="modal-z flex-column" id="modalz">
         <div class="modal-content flex-column x-start">
             <span id="closez">&times;</span>
             <h3 class="text-primary text-bold">Add New Category</h3>
             <small class="text-red"> <?php echo $error ?> </small>
-            <form action="index.php" method="post" enctype="multipart/form-data">
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
                 <input type="text" placeholder="Category Name" name="category" required style="border: 1px solid;"> <br> <br>
                 <input type="file" name="img" required style="border: 2px solid;"> <br> <br>
 
@@ -53,17 +71,21 @@
         <div class="modal-content flex-column">
             <span id="closer" >&times;</span>
 
-            <form action="/supplier/products/index.php" class="" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" class="" method="POST" enctype="multipart/form-data">
                 <h3 class="text-primary text-bold">Create New Product</h3>
                 <small class="text-red"> <?php echo $error ?> </small>
                 <input type="text" placeholder="Product Name" name="name" required> <br>
-                <input type="text" placeholder="Product Price" name="price" required> <br>
-                <input type="text" placeholder="Product Quantity" name="quantity" required> <br>
-                <input type="text" placeholder="Product Description" name="description" required> <br>
+                <input type="number" placeholder="Product Price" name="price" required> <br>
+                <input type="number" placeholder="Product Quantity" name="count" required> <br>
                 <label for="" class="text-primary">Product Image</label>
                 <input type="file" name="img" required> <br>
 
-                <select name="" id=""></select>
+                <select name="category" id="" required>
+                    <option value="">Select Category</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?php echo $category->id ?>"> <?php echo $category->name ?> </option>
+                    <?php endforeach ?>
+                </select>
 
                 <button type="submit" class="btn-gradient" name="add_product">Add Product</button>
             </form>
@@ -96,10 +118,10 @@
                     <?php foreach ($products as $product): ?>
                         <div class="product">
 
-                            <img src="../../assets/img/<?php echo $product->image_url ?>" alt="">
+                            <img src="../../assets/uploads/<?php echo $product->image_path ?>" alt="">
                             <p> <?php echo $product->name ?> </p>
                             <p>KES <?php echo $product->price ?></p>
-                            <a href="./view/id=<?php echo bin2hex($product->id) ?>"> View <i class="fas fa-arrow-right"></i> </a>
+                            <a href="./view/?id=<?php echo bin2hex(base64_encode($product->id)) ?>"> View <i class="fas fa-arrow-right"></i> </a>
                         </div>
                     <?php endforeach ?>
 

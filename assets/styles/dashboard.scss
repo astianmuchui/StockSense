@@ -470,7 +470,6 @@ body
                 padding: 1% 0;
                 width: 90%;
                 margin-left: 3.5%;
-                @extend .shadowed;
                 display: inline-flex;
                 flex-direction: row;
                 justify-content: space-around;
@@ -480,6 +479,7 @@ body
                 {
                     margin-top: 5px;
                     font-size: small;
+                    color : $text-color;
                 }
 
                 a

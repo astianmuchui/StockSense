@@ -119,8 +119,9 @@ $text-color: lighten($primary-color, 15);
 
         border-radius: 10px;
         width: 40%;
-        height: 85%;
+        height: 90%;
         opacity: 0;
+        display: none;
         position: sticky;
         border-radius: 10px;
         background-color: rgba($theme-color, 0.99);
@@ -154,7 +155,7 @@ $text-color: lighten($primary-color, 15);
             position: relative;
             top: 5%;
 
-            input
+            input, select
             {
                 height: 50px;
                 width: 100%;
